@@ -1,0 +1,31 @@
+client
+dev tun
+proto udp
+remote [REPLACE_WITH_CLIENT_VPN_ENDPOINT_HOSTNAME] 443
+
+remote-random-hostname
+resolv-retry infinite
+nobind
+remote-cert-tls server
+cipher AES-256-GCM
+verb 3
+<ca>
+-----BEGIN CERTIFICATE-----
+[REPLACE_WITH_SERVER_CERT]
+-----END CERTIFICATE-----
+
+</ca>
+<key>
+-----BEGIN PRIVATE KEY-----
+[REPLACE_WITH_CLIENT_PRIVATE_KEY]
+-----END PRIVATE KEY-----
+</key>
+<cert>
+-----BEGIN CERTIFICATE-----
+[REPLACE_WITH_CLIENT_CERT]
+-----END CERTIFICATE-----
+</cert>
+
+reneg-sec 0
+
+verify-x509-name server name
