@@ -35,3 +35,4 @@ terraform.rc
 # custom
 *.key
 .DS_Store
+*.ovpn

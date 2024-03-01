@@ -3,15 +3,6 @@ locals {
   AWS_ENV = terraform.workspace == "default" ? "staging" : terraform.workspace
 }
 
-# AWS CLI credentials
-# variable "ACCESS_KEY" {}
-# variable "SECRET_KEY" {}
-# variable "TOKEN" {}
-
-# VPN Certs
-variable "ACM_SERVER_CERT_ARN" {}
-variable "ACM_CLIENT_CERT_ARN" {}
-
 variable "REGION" {
   type = map(string)
   default = {
@@ -76,4 +67,13 @@ variable "AMI" {
     us-east-1 = "ami-0440d3b780d96b29d"
     us-west-1 = "ami-07619059e86eaaaa2"
   }
+}
+
+# number of instances
+
+variable "WEBSERVER_COUNT" {
+  default = 2
+}
+variable "BUILDER_COUNT" {
+  default = 2
 }

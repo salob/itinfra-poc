@@ -9,10 +9,6 @@ resource "aws_acm_certificate" "vpn-cert" {
   }
 }
 
-output "imported-cert-arn" {
-  value = aws_acm_certificate.vpn-cert.arn
-}
-
 # set up vpn to access ec2 instances
 
 resource "aws_ec2_client_vpn_endpoint" "vpc-main-vpn" {

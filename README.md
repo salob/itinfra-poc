@@ -1,3 +1,7 @@
+# Overview
+
+
+
 # IaC - TERRAFORM
 
 ## Introduction
@@ -15,7 +19,21 @@ It comprises of the following main components:
 - 2 security groups (1 for EC2 instances and 1 for EC2 CVPN-endpoint) with ingress (inbound) and egress (outbound) rules to specify allowed traffic
 - 2 route tables (1 for public subnet to route to IGW, 1 for private subnet to route to NAT gateway)
 
-## Implemented Features
+The terraform folder structure is as follows:
+
+```
+- terraform # project root
+-- certs # folder to store public and private certs, key files are ignored in .gitignore file
+-- main.tf # ec2 instances
+-- networks.tf # vpc, subnets, routetables and routes
+-- providers.tf # providers configuration i.e. aws
+-- security-groups.tf # security groups along with ingress and egress rules
+-- settings.tf # main terraform config i.e. provider versions
+-- variables.tf # variables, including workspace specific variables to separate environments
+-- vpn.tf # ec2 vpn client endpoint specific configuration including cert upload to Amazon cert manager (ACM)
+```
+
+## Special Features
 
 - A Client VPN endpoint to restrict and control access to our VPN.
 - SSH through VPN to private IP addresses only
@@ -100,3 +118,68 @@ terraform apply -auto-approve
 ```
 terraform destroy
 ```
+
+# CaC Ansible
+
+## Introduction
+
+Ansible is a configuration as code (CaC) tool. Most CaC tools will now also provide ability to manage infrastructure as code (IaC) and vice versa. This Ansible project includes two playbooks, one for configuring a webserver and one for configuring a builder
+
+## Special Features
+
+- Virtual environment to ensure consistency
+- 2 playbooks with common role
+
+## Instructions
+
+### Prerequisites
+
+You will need to have python3 installed on the controller from where you will run your scripts.
+Most popular package managers can install python3 but it can also be downloaded directly here: https://www.python.org/downloads/
+
+### Environment Prep
+
+To keep your base python3 installation clean it is a good idea to set up a virtual environment prior to installing the required
+python modules. If solely working with linux vm's the `pywinrm` package is not required
+
+
+1. Create a virtual environment to use with ansible (FYI you can use a virtual environment across your ansible projects or use a dedicated one per project)
+`python3 -m venv ~/virtual_environments/ansible`
+2. Activate the virtual environment
+`. ~/virtual_environments/ansible/bin/activate`
+3. Install ansible and pywinrm (update pip prior to this)
+
+```
+pip install -U pip
+pip install ansible
+pip install pywinrm
+```
+
+### Prepare the hosts file
+
+The playbook references a hosts profile. Hosts can be separated into profiles in the hosts file.
+In the provided hosts file there are two profiles one for each playbook. The hosts file needs
+to be updated to incllude the ip addresses of the ec2 instances you plan to configure
+e.g.
+
+```
+[webservers]
+# webserver1
+10.0.0.20
+[builders]
+# builder1
+10.0.0.152
+```
+
+### Run the playbooks
+
+```
+# webserver
+ansible-playbook -i hosts --private-key=~/.ssh/labuser.pem ./webserver-play.yml
+```
+
+```
+# builder
+ansible-playbook -i hosts --private-key=~/.ssh/labuser.pem ./builder-play.yml
+```
+
