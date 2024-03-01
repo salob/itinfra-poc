@@ -1,0 +1,18 @@
+---
+- name: Install docker
+  ansible.builtin.package:
+    name: docker
+    state: latest
+
+- name: Add docker users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"
+
+- name: Ensure Docker is started and started at boot.
+  service:
+    name: docker
+    state: started
+    enabled: true

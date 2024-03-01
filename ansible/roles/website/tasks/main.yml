@@ -1,0 +1,22 @@
+---
+- name: Create html directory
+  ansible.builtin.file:
+    path: /opt/html
+    state: directory
+    mode: "0755"
+
+- name: Copy html file
+  copy:
+    src: README.html
+    dest: /opt/html/
+    owner: ec2-user
+    group: docker
+    mode: "0644"
+
+- name: Run an NGINX container hosting our website
+  community.docker.docker_container:
+    name: instructions-website
+    image: nginx
+    volumes:
+      - /opt/html:/usr/share/nginx/html
+    ports: "80:80"

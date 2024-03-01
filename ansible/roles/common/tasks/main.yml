@@ -1,0 +1,9 @@
+---
+- name: Install Packages
+  ansible.builtin.package:
+    name:
+      - git
+      - vim
+      - wget
+      - zip
+    state: latest
