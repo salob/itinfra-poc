@@ -3,17 +3,19 @@
 - [Overview](#overview)
 - [POC Features](#poc-additional-features)
 - [IaC using Terraform](#iac-using-terraform)
-  - [Prep](#prep)
-  - [Run](#run)
+  - [IaC Prep](#iac-prep)
+  - [IaC Run](#iac-run)
 - [CaC using Ansible](#cac-using-ansible)
-  - [Prep](#prep-1)
-  - [Run](#run-1)
+  - [CaC Prep](#cac-prep)
+  - [CaC Run](#cac-run)
 
 ## Overview
 
-This document contains the instructions for provisioning and configuring a simple architecture on AWS. `Terraform` is used to write the infrastructure as code whilst `Ansible` is used to configure the infrastructure that has been provisioned using Terraform.
+This document contains the instructions for provisioning and configuring a simple architecture on AWS. `Terraform` is used to write the infrastructure as code whilst `Ansible` is used to configure the infrastructure that has been provisioned using `Terraform`.
 
 ![poc-design](./images/poc-infra.png)
+
+
 
 ## POC Additional Features
 
@@ -27,8 +29,6 @@ This document contains the instructions for provisioning and configuring a simpl
 - Virtual environment to ensure consistency
 - 2 playbooks with common role
 - Keep packages and software up to date using ansible
-
-<div class="page"/>
 
 ## IaC using Terraform
 
@@ -47,17 +47,25 @@ It comprises of the following main components:
 
 The terraform folder structure is as follows:
 
-- terraform `project root``
--- certs `certs & keys folder, *.key ignored in .gitignore`
--- main.tf `ec2 instances`
--- networks.tf `vpc, subnets, routetables and routes`
--- providers.tf `providers configuration i.e. aws`
--- security-groups.tf `security groups, ingress, egress`
--- settings.tf `main terraform config, provider versions`
--- variables.tf `all variables, workspace specific variables`
--- vpn.tf `ec2 vpn client endpoint config, cert upload to Amazon cert manager (ACM)`
+- terraform `project root`
 
-### Prep
+  - certs `certs & keys folder, *.key ignored in .gitignore`
+    - ca.crt `cert authority for signing certs`
+    - server.crt `server certificate`
+    - server.key `server private key, ignored by git`
+    - client1.domain.tld.crt `client certificate`
+    - client1.domain.tld.key `client private key, ignored by git`
+    - client-config.ovpn `openvpn client config file, ignored by git`
+    - client-config.ovpn.sample `sample openvpn client config file`
+  - main.tf `ec2 instances`
+  - networks.tf `vpc, subnets, routetables and routes`
+  - providers.tf `providers configuration i.e. aws`
+  - security-groups.tf `security groups, ingress, egress`
+  - settings.tf `main terraform config, provider versions`
+  - variables.tf `all variables, workspace specific variables`
+  - vpn.tf `ec2 vpn client endpoint config, cert upload to Amazon cert manager (ACM)`
+
+### IaC Prep
 
 **VPN Client endpoint**
 The Client VPN endpoint uses cert based authentication. You will need to generate TLS certs and will also require a vpn client to connect.
@@ -79,7 +87,7 @@ on the [AWS docs](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-ge
 # Generate client cert and key
 ./easyrsa build-client-full client1.domain.tld nopass
 ```
-<div class="page"/>
+
 
 4. Copy the following generated certs and keys to the terraform/certs folder in this repo
 
@@ -94,7 +102,7 @@ pki/private/client1.domain.tld.key
 **Terraform**
 Terraform will need to be installed on the machine where you will run the below steps. Most popular package managers are also supported. For more information follow steps here: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
 
-### Run
+### IaC Run
 
 1. Navigate to terraform directory
 `cd terraform`
@@ -133,14 +141,36 @@ terraform apply -auto-approve
 terraform destroy
 ```
 
-<div class="page"/>
+
 
 ## CaC using Ansible
 
 Ansible is a configuration as code (CaC) tool. Most CaC tools will now also provide ability to manage infrastructure as code (IaC) and vice versa. The ansible folder includes two playbooks, one for configuring a webserver and one for configuring a builder. A common role is
 shared by both playbooks, tasks specific for the relevant play are stored in the playbooks.
 
-### Prep
+The ansible folder structure is as follows:
+
+- ansible `project root`
+
+  - roles `folder for storing role configurations`
+    - common `a common role for basic package installation and updates`
+      - tasks `folder to store task files for common role`
+        - main.yml `tasks to install common os packages`
+    - docker `folder for storing docker role`
+      - defaults `folder for storing variables`
+        - main.yml `file for storing docker role variables`
+      - tasks `folder to store task files for docker role`
+        - main.yml `tasks to install and configure docker`
+    - website `folder for storing website role to deploy and configure NGINX`
+      - files `folder for storing files to copy to hosts`
+        - README.html `html file to serve using NGINX webserver`
+      - tasks `folder to store task files for website role`
+        - main.yml `tasks to set up nginx container and copy website data`
+  - builder-play.yml `playbook for builder servers in private subnet`
+  - webserver-play.yml `playbook for webservers in public subnet`
+  - hosts `file to store ip addresses and profiles of ec2 instances (builders and webservers)`
+
+### CaC Prep
 
 You will need to have python3 installed on the controller from where you will run your scripts.
 Most popular package managers can install python3 but it can also be downloaded directly here: https://www.python.org/downloads/
@@ -179,19 +209,19 @@ e.g.
 10.0.0.152
 ```
 
-<div class="page"/>
 
-### Run
+
+### CaC Run
 
 The playbooks can be ran using the below commands, since the standard `id_rsa` key is not being used for ssh, the private key for connecting to the ec2 instances can be passed in using `--private-key`. Inventory or hosts file can be passed in using `-i` flag, in this case the default name `hosts` is used and could be omitted.
 
 ```
 # webserver
-ansible-playbook -i hosts --private-key=~/.ssh/labuser.pem ./webserver-play.yml
+ansible-playbook -i hosts --private-key=~/.ssh/labsuser.pem ./webserver-play.yml
 ```
 
 ```
 # builder
-ansible-playbook -i hosts --private-key=~/.ssh/labuser.pem ./builder-play.yml
+ansible-playbook -i hosts --private-key=~/.ssh/labsuser.pem ./builder-play.yml
 ```
 
