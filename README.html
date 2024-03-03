@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="poc-instructions">POC Instructions</h1>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#poc-additional-features">POC Features</a></li>
+<li><a href="#iac-using-terraform">IaC using Terraform</a>
+<ul>
+<li><a href="#iac-prep">IaC Prep</a></li>
+<li><a href="#iac-run">IaC Run</a></li>
+</ul>
+</li>
+<li><a href="#cac-using-ansible">CaC using Ansible</a>
+<ul>
+<li><a href="#cac-prep">CaC Prep</a></li>
+<li><a href="#cac-run">CaC Run</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>This document contains the instructions for provisioning and configuring a simple architecture on AWS. <code>Terraform</code> is used to write the infrastructure as code whilst <code>Ansible</code> is used to configure the infrastructure that has been provisioned using <code>Terraform</code>.</p>
+<p><img src="./images/poc-infra.png" alt="poc-design"></p>
+<h2 id="poc-additional-features">POC Additional Features</h2>
+<p><em>IaC Features</em></p>
+<ul>
+<li>A Client VPN endpoint to restrict and control access to our VPN.</li>
+<li>SSH through VPN to private IP addresses only</li>
+<li>Private subnet for additional security along with NAT gateway to allow access out from private subnet to the internet</li>
+<li>Support for Terraform workspaces to separate dev, staging and production environments in a single AWS account</li>
+</ul>
+<p><em>CaC Features</em></p>
+<ul>
+<li>Virtual environment to ensure consistency</li>
+<li>2 playbooks with common roles as well as separate role and tasks</li>
+<li>Keep packages and software up to date using ansible</li>
+<li>deploy presido to show example of how pii can be anonymised in logs</li>
+</ul>
+<h2 id="iac-using-terraform">IaC using Terraform</h2>
+<p>The <code>terraform</code> folder contains the terraform source code to provision the infrastructure required for a web app.
+It provisions a simple architecture to satisfy a POC but could easily be extended.
+It comprises of the following main components:</p>
+<ul>
+<li>VPC in <code>us-east-1</code> region</li>
+<li>2 Subnets (1 public, 1 private) hosted in <code>us-east-1a</code> and <code>us-east-1b</code> availability zones respectively</li>
+<li>An internet gateway (IGW)</li>
+<li>A NAT gateway to provide internet access to the private subnet resources</li>
+<li>An EC2 client vpn endpoint (CVPN-endpoint) to provide ssh access to the ec2 instances</li>
+<li>4 EC2 instances, 2 in the public subnet and 2 in the private subnet</li>
+<li>2 security groups (1 for EC2 instances and 1 for EC2 CVPN-endpoint) with ingress (inbound) and egress (outbound) rules to specify allowed traffic</li>
+<li>2 route tables (1 for public subnet to route to IGW, 1 for private subnet to route to NAT gateway)</li>
+</ul>
+<p>The terraform folder structure is as follows:</p>
+<ul>
+<li>
+<p>terraform <code>project root</code></p>
+<ul>
+<li>certs <code>certs &amp; keys folder, *.key ignored in .gitignore</code>
+<ul>
+<li>ca.crt <code>cert authority for signing certs</code></li>
+<li>server.crt <code>server certificate</code></li>
+<li>server.key <code>server private key, ignored by git</code></li>
+<li>client1.domain.tld.crt <code>client certificate</code></li>
+<li>client1.domain.tld.key <code>client private key, ignored by git</code></li>
+<li>client-config.ovpn <code>openvpn client config file, ignored by git</code></li>
+<li>client-config.ovpn.sample <code>sample openvpn client config file</code></li>
+</ul>
+</li>
+<li>main.tf <code>ec2 instances</code></li>
+<li>networks.tf <code>vpc, subnets, routetables and routes</code></li>
+<li>providers.tf <code>providers configuration i.e. aws</code></li>
+<li>security-groups.tf <code>security groups, ingress, egress</code></li>
+<li>settings.tf <code>main terraform config, provider versions</code></li>
+<li>variables.tf <code>all variables, workspace specific variables</code></li>
+<li>vpn.tf <code>ec2 vpn client endpoint config, cert upload to Amazon cert manager (ACM)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="iac-prep">IaC Prep</h3>
+<p><strong>VPN Client endpoint</strong>
+The Client VPN endpoint uses cert based authentication. You will need to generate TLS certs and will also require a vpn client to connect.
+The OpenVPN client is available for all major operating systems and is easy to use. The OpenVPN project also provide an easy-rsa utility
+for creating a certificate authority with signed certs. Below are the steps to get set up quickly and easily. This project is also referenced
+on the <a href="https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-getting-started.html">AWS docs</a> for creating a client VPN endpoint</p>
+<ol>
+<li>Download the relevant openvpn client for your OS: https://openvpn.net/client/</li>
+<li>Clone the easy-rsa repo <code>git@github.com:OpenVPN/easy-rsa.git</code></li>
+<li>Navigate to easy-rsa/easyrsa3 folder and run below commands</li>
+</ol>
+<pre class="hljs"><code><div># Initialise new pki environment
+./easyrsa init-pki
+# Build a new ca authority
+./easyrsa build-ca # follow prompts
+# Generate server cert and key
+./easyrsa build-server-full server nopass
+# Generate client cert and key
+./easyrsa build-client-full client1.domain.tld nopass
+</div></code></pre>
+<ol start="4">
+<li>Copy the following generated certs and keys to the terraform/certs folder in this repo</li>
+</ol>
+<pre class="hljs"><code><div>pki/ca.crt
+pki/issued/server.crt
+pki/private/server.key
+pki/issued/client1.domain.tld.crt
+pki/private/client1.domain.tld.key
+</div></code></pre>
+<p><strong>Terraform</strong>
+Terraform will need to be installed on the machine where you will run the below steps. Most popular package managers are also supported. For more information follow steps here: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli</p>
+<h3 id="iac-run">IaC Run</h3>
+<ol>
+<li>
+<p>Navigate to terraform directory
+<code>cd terraform</code></p>
+</li>
+<li>
+<p>Initialise current directory for terraform use
+<code>terraform init</code></p>
+</li>
+<li>
+<p>Create the workspaces for the 3 environments</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>terraform workspace new dev
+terraform workspace new staging
+terraform workspace new production
+</div></code></pre>
+<ol start="4">
+<li>Swith to workspace of choice e.g. dev</li>
+</ol>
+<pre class="hljs"><code><div>terraform workspace select dev
+</div></code></pre>
+<ol start="5">
+<li>Create terraform plan to preview changes</li>
+</ol>
+<pre class="hljs"><code><div>terraform plan
+</div></code></pre>
+<ol start="6">
+<li>Execute actions in plan (without prompt)</li>
+</ol>
+<pre class="hljs"><code><div>terraform apply -auto-approve
+</div></code></pre>
+<ol start="7">
+<li>Destroy all resources in the plan</li>
+</ol>
+<pre class="hljs"><code><div>terraform destroy
+</div></code></pre>
+<h2 id="cac-using-ansible">CaC using Ansible</h2>
+<p>Ansible is a configuration as code (CaC) tool. Most CaC tools will now also provide ability to manage infrastructure as code (IaC) and vice versa. The ansible folder includes two playbooks, one for configuring a webserver and one for configuring a builder. A common role is
+shared by both playbooks, tasks specific for the relevant play are stored in the playbooks.</p>
+<p>The ansible folder structure is as follows:</p>
+<ul>
+<li>
+<p>ansible <code>project root</code></p>
+<ul>
+<li>roles <code>folder for storing role configurations</code>
+<ul>
+<li>common <code>a common role for basic package installation and updates</code>
+<ul>
+<li>tasks <code>folder to store task files for common role</code>
+<ul>
+<li>main.yml <code>tasks to install common os packages</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>docker <code>folder for storing docker role</code>
+<ul>
+<li>defaults <code>folder for storing variables</code>
+<ul>
+<li>main.yml <code>file for storing docker role variables</code></li>
+</ul>
+</li>
+<li>tasks <code>folder to store task files for docker role</code>
+<ul>
+<li>main.yml <code>tasks to install and configure docker</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>website <code>folder for storing website role to deploy and configure NGINX</code>
+<ul>
+<li>files <code>folder for storing files to copy to hosts</code>
+<ul>
+<li>README.html <code>html file to serve using NGINX webserver</code></li>
+</ul>
+</li>
+<li>tasks <code>folder to store task files for website role</code>
+<ul>
+<li>main.yml <code>tasks to set up nginx container and copy website data</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>builder-play.yml <code>playbook for builder servers in private subnet</code></li>
+<li>webserver-play.yml <code>playbook for webservers in public subnet</code></li>
+<li>hosts <code>file to store ip addresses and profiles of ec2 instances (builders and webservers)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="cac-prep">CaC Prep</h3>
+<p>You will need to have python3 installed on the controller from where you will run your scripts.
+Most popular package managers can install python3 but it can also be downloaded directly here: https://www.python.org/downloads/</p>
+<p><strong>Environment Prep</strong>
+To keep your base python3 installation clean it is a good idea to set up a virtual environment prior to installing the required
+python modules. If solely working with linux vm's the <code>pywinrm</code> package is not required</p>
+<ol>
+<li>Create a virtual environment to use with ansible (FYI you can use a virtual environment across your ansible projects or use a dedicated one per project)
+<code>python3 -m venv ~/virtual_environments/ansible</code></li>
+<li>Activate the virtual environment
+<code>. ~/virtual_environments/ansible/bin/activate</code></li>
+<li>Install ansible and pywinrm (update pip prior to this)</li>
+</ol>
+<pre class="hljs"><code><div>pip install -U pip
+pip install ansible
+pip install pywinrm
+</div></code></pre>
+<p><strong>Prepare the hosts file</strong>
+The playbook references a hosts profile. Hosts can be separated into profiles in the hosts file.
+In the provided hosts file there are two profiles one for each playbook. The hosts file needs
+to be updated to incllude the ip addresses of the ec2 instances you plan to configure
+e.g.</p>
+<pre class="hljs"><code><div>[webservers]
+# webserver1
+10.0.0.20
+[builders]
+# builder1
+10.0.0.152
+</div></code></pre>
+<h3 id="cac-run">CaC Run</h3>
+<p>The playbooks can be ran using the below commands, since the standard <code>id_rsa</code> key is not being used for ssh, the private key for connecting to the ec2 instances can be passed in using <code>--private-key</code>. Inventory or hosts file can be passed in using <code>-i</code> flag, in this case the default name <code>hosts</code> is used and could be omitted.</p>
+<pre class="hljs"><code><div># webserver
+ansible-playbook -i hosts --private-key=~/.ssh/labsuser.pem ./webserver-play.yml
+</div></code></pre>
+<pre class="hljs"><code><div># builder
+ansible-playbook -i hosts --private-key=~/.ssh/labsuser.pem ./builder-play.yml
+</div></code></pre>
+<h2 id="result">Result</h2>
+<ul>
+<li>Navigate to public ip of webserver in a browser, readme html file should be served</li>
+<li>test presidio
+<ul>
+<li>ssh to builder vm e.g. <code>ssh -i ~/.ssh/labsuser.pem ec2-user@10.0.1.56</code></li>
+<li>test anonymiser <code>curl -X POST http://localhost:5001/anonymize -H &quot;Content-type: application/json&quot; --data &quot;{\&quot;text\&quot;: \&quot;hello world, my name is Jane Doe. My number is: 034453334\&quot;, \&quot;analyzer_results\&quot;: [{\&quot;start\&quot;: 24, \&quot;end\&quot;: 32, \&quot;score\&quot;: 0.8, \&quot;entity_type\&quot;: \&quot;NAME\&quot;}, { \&quot;start\&quot;: 48, \&quot;end\&quot;: 57,  \&quot;score\&quot;: 0.95,\&quot;entity_type\&quot;: \&quot;PHONE_NUMBER\&quot; }],  \&quot;anonymizers\&quot;: {\&quot;DEFAULT\&quot;: { \&quot;type\&quot;: \&quot;replace\&quot;, \&quot;new_value\&quot;: \&quot;ANONYMIZED\&quot; },\&quot;PHONE_NUMBER\&quot;: { \&quot;type\&quot;: \&quot;mask\&quot;, \&quot;masking_char\&quot;: \&quot;*\&quot;, \&quot;chars_to_mask\&quot;: 4, \&quot;from_end\&quot;: true }}}&quot;</code></li>
+</ul>
+</li>
+</ul>
+
+</body>
+</html>
