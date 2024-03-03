@@ -12,11 +12,11 @@ resource "aws_instance" "webserver" {
 
 }
 
-output "publicIP-public-ec2-instance" {
+output "privateIP-public-ec2-instance" {
   value = formatlist("%v", aws_instance.webserver.*.private_ip)
 }
 
-output "privateIP-public-ec2-instance" {
+output "publicIP-public-ec2-instance" {
   value = formatlist("%v", aws_instance.webserver.*.public_ip)
 }
 
