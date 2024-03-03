@@ -27,8 +27,9 @@ This document contains the instructions for provisioning and configuring a simpl
 
 *CaC Features*
 - Virtual environment to ensure consistency
-- 2 playbooks with common role
+- 2 playbooks with common roles as well as separate role and tasks
 - Keep packages and software up to date using ansible
+- deploy presido to show example of how pii can be anonymised in logs
 
 ## IaC using Terraform
 
@@ -225,3 +226,9 @@ ansible-playbook -i hosts --private-key=~/.ssh/labsuser.pem ./webserver-play.yml
 ansible-playbook -i hosts --private-key=~/.ssh/labsuser.pem ./builder-play.yml
 ```
 
+## Result
+
+- Navigate to public ip of webserver in a browser, readme html file should be served
+- test presidio
+  - ssh to builder vm e.g. `ssh -i ~/.ssh/labsuser.pem ec2-user@10.0.1.56` 
+  - test anonymiser `curl -X POST http://localhost:5001/anonymize -H "Content-type: application/json" --data "{\"text\": \"hello world, my name is Jane Doe. My number is: 034453334\", \"analyzer_results\": [{\"start\": 24, \"end\": 32, \"score\": 0.8, \"entity_type\": \"NAME\"}, { \"start\": 48, \"end\": 57,  \"score\": 0.95,\"entity_type\": \"PHONE_NUMBER\" }],  \"anonymizers\": {\"DEFAULT\": { \"type\": \"replace\", \"new_value\": \"ANONYMIZED\" },\"PHONE_NUMBER\": { \"type\": \"mask\", \"masking_char\": \"*\", \"chars_to_mask\": 4, \"from_end\": true }}}"`

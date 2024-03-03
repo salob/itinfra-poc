@@ -396,8 +396,9 @@ code {
 <p><em>CaC Features</em></p>
 <ul>
 <li>Virtual environment to ensure consistency</li>
-<li>2 playbooks with common role</li>
+<li>2 playbooks with common roles as well as separate role and tasks</li>
 <li>Keep packages and software up to date using ansible</li>
+<li>deploy presido to show example of how pii can be anonymised in logs</li>
 </ul>
 <h2 id="iac-using-terraform">IaC using Terraform</h2>
 <p>The <code>terraform</code> folder contains the terraform source code to provision the infrastructure required for a web app.
@@ -600,6 +601,16 @@ ansible-playbook -i hosts --private-key=~/.ssh/labsuser.pem ./webserver-play.yml
 <pre class="hljs"><code><div># builder
 ansible-playbook -i hosts --private-key=~/.ssh/labsuser.pem ./builder-play.yml
 </div></code></pre>
+<h2 id="result">Result</h2>
+<ul>
+<li>Navigate to public ip of webserver in a browser, readme html file should be served</li>
+<li>test presidio
+<ul>
+<li>ssh to builder vm e.g. <code>ssh -i ~/.ssh/labsuser.pem ec2-user@10.0.1.56</code></li>
+<li>test anonymiser <code>curl -X POST http://localhost:5001/anonymize -H &quot;Content-type: application/json&quot; --data &quot;{\&quot;text\&quot;: \&quot;hello world, my name is Jane Doe. My number is: 034453334\&quot;, \&quot;analyzer_results\&quot;: [{\&quot;start\&quot;: 24, \&quot;end\&quot;: 32, \&quot;score\&quot;: 0.8, \&quot;entity_type\&quot;: \&quot;NAME\&quot;}, { \&quot;start\&quot;: 48, \&quot;end\&quot;: 57,  \&quot;score\&quot;: 0.95,\&quot;entity_type\&quot;: \&quot;PHONE_NUMBER\&quot; }],  \&quot;anonymizers\&quot;: {\&quot;DEFAULT\&quot;: { \&quot;type\&quot;: \&quot;replace\&quot;, \&quot;new_value\&quot;: \&quot;ANONYMIZED\&quot; },\&quot;PHONE_NUMBER\&quot;: { \&quot;type\&quot;: \&quot;mask\&quot;, \&quot;masking_char\&quot;: \&quot;*\&quot;, \&quot;chars_to_mask\&quot;: 4, \&quot;from_end\&quot;: true }}}&quot;</code></li>
+</ul>
+</li>
+</ul>
 
 </body>
 </html>

@@ -8,7 +8,7 @@
 - name: Copy html file
   copy:
     src: README.html
-    dest: /opt/html/
+    dest: /opt/html/index.html
     owner: ec2-user
     group: docker
     mode: "0644"
