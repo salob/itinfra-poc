@@ -7,3 +7,15 @@
   roles:
     - common
     - docker
+
+  tasks:
+    - name: Run presidio analyser
+      community.docker.docker_container:
+        name: presidio-analyser
+        image: mcr.microsoft.com/presidio-analyzer
+        ports: "5001:3000"
+    - name: Run presidio anonymiser
+      community.docker.docker_container:
+        name: presidio-anonymiser
+        image: mcr.microsoft.com/presidio-anonymizer
+        ports: "5002:3000"       

@@ -14,7 +14,7 @@ resource "aws_acm_certificate" "vpn-cert" {
 resource "aws_ec2_client_vpn_endpoint" "vpc-main-vpn" {
   description            = "VPN for ${local.AWS_ENV}-vpc-main"
   server_certificate_arn = aws_acm_certificate.vpn-cert.arn
-  client_cidr_block      = var.VPC_CIDR[local.AWS_ENV]
+  client_cidr_block      = var.VPN_CIDR[local.AWS_ENV]
   security_group_ids     = [aws_security_group.vpn-client-sg.id]
   vpc_id                 = aws_vpc.vpc-main.id
   tags = {

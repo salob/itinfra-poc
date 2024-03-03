@@ -26,8 +26,8 @@ variable "VPC_BLOCK" {
 variable "SUBNET_1_BLOCK" {
   type = map(string)
   default = {
-    production = "10.0.2.0/24"
-    staging    = "10.0.1.0/24"
+    production = "10.2.0.0/24"
+    staging    = "10.1.0.0/24"
     dev        = "10.0.0.0/24"
   }
 }
@@ -35,18 +35,18 @@ variable "SUBNET_1_BLOCK" {
 variable "SUBNET_2_BLOCK" {
   type = map(string)
   default = {
-    production = "10.0.5.0/24"
-    staging    = "10.0.4.0/24"
-    dev        = "10.0.3.0/24"
+    production = "10.2.1.0/24"
+    staging    = "10.1.1.0/24"
+    dev        = "10.0.1.0/24"
   }
 }
 
-variable "VPC_CIDR" {
+variable "VPN_CIDR" {
   type = map(string)
   default = {
-    production = "10.300.0.0/22"
-    staging    = "10.200.0.0/22"
-    dev        = "10.100.0.0/22"
+    production = "10.30.0.0/22"
+    staging    = "10.20.0.0/22"
+    dev        = "10.10.0.0/22"
   }
 }
 
